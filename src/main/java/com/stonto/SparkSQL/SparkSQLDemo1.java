@@ -17,15 +17,16 @@ import java.util.Arrays;
 
 public class SparkSQLDemo1 {
     public static void main(String[] args){
+        System.setProperty("HADOOP_USER_NAME","hadoopuser");
         SparkConf conf = new SparkConf().setAppName("SparkSQL").setMaster("local");
         JavaSparkContext sc = new JavaSparkContext(conf);
         SparkSession sparkSession = SparkSession.builder().appName("SparkSQL").getOrCreate();
         //JavaRDD<String> input = sc.parallelize(Arrays.asList("Lucy,23","Mark,22"));
-        JavaRDD<String> input = sc.textFile("G:\\hadoop工具\\samplePeopleInformation.txt");
+        JavaRDD<String> input = sc.textFile("G://hadoop工具//20180301-3万条.txt");
         JavaRDD<Person> personJavaRDD = input.map(new Function<String, Person>() {
             @Override
             public Person call(String s) throws Exception {
-                String[] parts =s.split(",");
+                String[] parts =s.split("\\001");
                 Person p = new Person(parts[1],Integer.parseInt(parts[2]));
                 return  p;
             }
@@ -40,14 +41,14 @@ public class SparkSQLDemo1 {
         SQLContext sqlContext = new SQLContext(sparkSession);
         sqlContext.registerDataFrameAsTable(df,"t_person");
 
-        /*sqlContext.sql("select * from t_person where age>180").show();
-        sqlContext.sql("select count(1) from t_person").show();*/
-        //DataFrame  df1 = sqlContext.sql("select count(1) from t_person");
-        Dataset<Row> ds = sqlContext.sql("select * from t_person where age>180");
-        ds.registerTempTable("SparkTest");
-        JavaRDD<Row> sdRow =ds.javaRDD().repartition(1);
-        String resultPath = "G:\\hadoop工具\\result1";
-        sdRow.saveAsTextFile(resultPath);
+        sqlContext.sql("select * from t_person where age>180").show();
+        sqlContext.sql("select count(1) from t_person").show();
+
+        //Dataset<Row> ds = sqlContext.sql("select * from t_person where age>180");
+        //ds.registerTempTable("SparkTest");
+        //JavaRDD<Row> sdRow =ds.javaRDD().repartition(1);
+        //String resultPath = "hdfs://nnode:9000/spark/result";
+        //sdRow.saveAsTextFile(resultPath);
         sc.close();
     }
 

@@ -17,7 +17,7 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
     <spark.version>2.4.0</spark.version>
-    <hadoop.version>2.6.5</hadoop.version>
+    <hadoop.version>2.6.0</hadoop.version>
   </properties>
 
   <dependencies>
@@ -52,7 +52,7 @@
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-streaming_2.11</artifactId>
       <version>2.4.0</version>
-      <scope>provided</scope>
+      <!-- <scope>provided</scope> -->
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
     <dependency>
@@ -71,6 +71,7 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.47</version>
     </dependency>
+
 
   </dependencies>
 
