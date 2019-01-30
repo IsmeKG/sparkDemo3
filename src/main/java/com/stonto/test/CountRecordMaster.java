@@ -1,4 +1,4 @@
-package com.stonto;
+package com.stonto.test;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
@@ -6,7 +6,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 import java.io.FileWriter;
 
-//spark-submit --class com.stonto.CountRecordMaster  /home/sparkD2.jar --master spark://nnode:7077   执行方法
+//spark-submit --class com.stonto.test.CountRecordMaster  /home/sparkD2.jar --master spark://nnode:7077   执行方法
 public class CountRecordMaster {
     public static void main(String [] args){
         //如果你的windows用户名和集群上用户名不一样，这里就应该配置一下。

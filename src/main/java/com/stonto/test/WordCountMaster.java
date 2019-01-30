@@ -1,4 +1,4 @@
-package com.stonto;
+package com.stonto.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import scala.Tuple2;
  * Java实现Spark的WordCount!
  *
  */
-public class WordCount
+public class WordCountMaster
 {
     public static void main( String[] args ) {
         /**
@@ -115,8 +115,20 @@ public class WordCount
         });
 
         /**
+         * 6、将计算结果文件输出到文件系统
+         * HDFS：
+         * 使用新版API（org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;）
+         * wordCount.saveAsNewAPIHadoopFile("hdfs://SparkSingleNode:9000/wordcount", Text.class, IntWritable.class, TextOutputFormat.class, new Configuration());
+         * 使用旧版API（org.apache.hadoop.mapred.JobConf;org.apache.hadoop.mapred.OutputFormat;）
+         * wordCount.saveAsHadoopFile("hdfs://SparkSingleNode:9000/wordcount", Text.class, IntWritable.class, OutputFormat.class, new JobConf(new Configuration()));
+         * 使用默认TextOutputFile写入到HDFS(注意写入HDFS权限，如无权限则执行：hdfs dfs -chmod -R 777 /wordcount)
+         * wordCount.saveAsTextFile("hdfs://SparkSingleNode:9000/README.md");
+         */
+        wordsCount.saveAsTextFile("hdfs://SparkSingleNode:9000/wordcount");
+        /**
          * 第6步：关闭SparkContext容器，结束本次作业
          */
         sc.close();
+
     }
 }

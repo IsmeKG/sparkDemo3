@@ -1,4 +1,4 @@
-package com.stonto;
+package com.stonto.test;
 
 import java.io.BufferedWriter;
 import java.io.File;
